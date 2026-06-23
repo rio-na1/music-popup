@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why You Wanna Fight?</title>
+    <style>
+        body {
+            background-color: #008080; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .error-box {
+            display: none;
+            width: 300px;
+            background: #f0f0f0;
+            border: 2px solid #fff;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            position: absolute;
+            border-radius: 3px;
+        }
+        .error-header {
+            background: linear-gradient(to right, #000080, #1084d0);
+            color: white;
+            padding: 5px 10px;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .close-btn {
+            background: #e0e0e0;
+            color: black;
+            border: 1px solid #707070;
+            padding: 0 5px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .error-body {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 13px;
+            color: #000;
+        }
+        .icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 50%;
+        }
+        .icon-info {
+            background: #2196F3;
+            color: white;
+        }
+        .icon-error {
+            background: #f44336;
+            color: white;
+        }
+        .icon-error::before { content: "✕"; }
+        .icon-info::before { content: "i"; font-style: italic; }
+        
+        .error-footer {
+            padding: 10px;
+            text-align: center;
+            background: #f0f0f0;
+        }
+        .ok-btn {
+            background: #e1e1e1;
+            border: 1px solid #adadad;
+            padding: 5px 25px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .ok-btn:active { background: #cce4f7; border-color: #0078d7; }
+        
+        #start-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="start-btn" onclick="startSurprise()">ចុចទីនេះលេងហ្គេម 🤍</button>
+
+    <div id="errorBox" class="error-box">
+        <div class="error-header">
+            <span id="titleText">Why You Wanna Fight? - Bruno Mars</span>
+            <button class="close-btn">✕</button>
+        </div>
+        <div class="error-body">
+            <div id="errorIcon" class="icon"></div>
+            <span id="messageText">Error Message</span>
+        </div>
+        <div class="error-footer">
+            <button class="ok-btn">OK</button>
+        </div>
+    </div>
+
+    <audio id="bgMusic" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+    <script>
+        
+        const lyrics = [
+            { text: "You want me knocking", isInfo: true, duration: 2200 },
+            { text: "On the door", isInfo: true, duration: 1800 },
+            { text: "Crying in the rain...", isInfo: false, duration: 2500 },
+            { text: "Baby girl, for you", isInfo: true, duration: 2300 },
+            { text: "I'll do all them things", isInfo: true, duration: 2500 }
+        ];
+
+        let currentIndex = 0;
+        const errorBox = document.getElementById('errorBox');
+const messageText = document.getElementById('messageText');
+        const errorIcon = document.getElementById('errorIcon');
+        const bgMusic = document.getElementById('bgMusic');
+        const startBtn = document.getElementById('start-btn');
+
+        function startSurprise() {
+            startBtn.style.display = 'none'; 
+            bgMusic.play(); 
+            showNextLyrics();
+        }
+
+        function showNextLyrics() {
+            if (currentIndex < lyrics.length) {
+                const current = lyrics[currentIndex];
+                
+          
+                messageText.innerText = current.text;
+                
+          
+                if (current.isInfo) {
+                    errorIcon.className = "icon icon-info";
+                } else {
+                    errorIcon.className = "icon icon-error";
+                }
+
+        
+                errorBox.style.display = 'block';
+
+                
+                const randomX = Math.floor(Math.random() * 40) - 20;
+                const randomY = Math.floor(Math.random() * 60) - 30;
+                errorBox.style.transform = translate(${randomX}px, ${randomY}px);
+
+            
+                setTimeout(() => {
+                    errorBox.style.display = 'none';
+                    currentIndex++;
+                    showNextLyrics(); 
+                }, current.duration);
+            } else {
+              
+                alert("I lost the fight, I love you, Aliza! 🤍");
+            }
+        }
+    </script>
+</body>
+</html>
