@@ -3,176 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Why You Wanna Fight?</title>
+    <title>For Aliza 🤍</title>
     <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background-color: #008080; 
+            background-color: #008080;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
         }
-        .error-box {
-            display: none;
-            width: 300px;
-            background: #f0f0f0;
-            border: 2px solid #fff;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-            position: absolute;
-            border-radius: 3px;
-        }
-        .error-header {
-            background: linear-gradient(to right, #000080, #1084d0);
+        #startBtn {
+            padding: 20px 40px;
+            font-size: 20px;
+            background-color: #ff4a7d;
             color: white;
-            padding: 5px 10px;
-            font-size: 14px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             font-weight: bold;
+            z-index: 9999;
+            transition: transform 0.2s;
+        }
+        #startBtn:active { transform: scale(0.95); }
+        .window {
+            position: absolute;
+            width: 290px;
+            background-color: #cbd0d4;
+            border: 2px solid #fff;
+            border-right-color: #848484;
+            border-bottom-color: #848484;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+            display: none;
+        }
+        .title-bar {
+            background: linear-gradient(90deg, #000080, #1084d0);
+            color: white;
+            padding: 4px 6px;
+            font-weight: bold;
+            font-size: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .close-btn {
-            background: #e0e0e0;
+            width: 16px;
+            height: 14px;
+            background-color: #cbd0d4;
+            border: 1px solid #fff;
+            border-right-color: #848484;
+            border-bottom-color: #848484;
             color: black;
-            border: 1px solid #707070;
-            padding: 0 5px;
-            font-size: 11px;
+            font-size: 9px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 12px;
             cursor: pointer;
         }
-        .error-body {
-            padding: 15px;
+        .window-body {
+            padding: 12px;
+            font-size: 13px;
+            color: black;
             display: flex;
             align-items: center;
-            gap: 15px;
-            font-size: 13px;
-            color: #000;
+            gap: 10px;
         }
-        .icon {
-            width: 32px;
-            height: 32px;
+        .error-icon {
+            width: 28px;
+            height: 28px;
+            background-color: #ff0000;
+            color: white;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 24px;
-            font-weight: bold;
-            border-radius: 50%;
-        }
-        .icon-info {
-            background: #2196F3;
-            color: white;
-        }
-        .icon-error {
-            background: #f44336;
-            color: white;
-        }
-        .icon-error::before { content: "✕"; }
-        .icon-info::before { content: "i"; font-style: italic; }
-        
-        .error-footer {
-            padding: 10px;
-            text-align: center;
-            background: #f0f0f0;
-        }
-        .ok-btn {
-            background: #e1e1e1;
-            border: 1px solid #adadad;
-            padding: 5px 25px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .ok-btn:active { background: #cce4f7; border-color: #0078d7; }
-        
-        #start-btn {
-            padding: 15px 30px;
-            font-size: 18px;
-            background: #ff4081;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <button id="start-btn" onclick="startSurprise()">jochmuyhvbbe<3</button>
+    <button id="startBtn">jochmuyhvbbe<3</button>
 
-    <div id="errorBox" class="error-box">
-        <div class="error-header">
-            <span id="titleText">Why You Wanna Fight? - Bruno Mars</span>
-            <button class="close-btn">✕</button>
-        </div>
-        <div class="error-body">
-            <div id="errorIcon" class="icon"></div>
-            <span id="messageText">Error Message</span>
-        </div>
-        <div class="error-footer">
-            <button class="ok-btn">OK</button>
-        </div>
-    </div>
-
-    <vidio id="bgMusic" src="music.mp4"style="display:none;"></vidio>
+    <!-- កន្លែងដាក់ File ភ្លេង (បើប្រើ .mp3 គ្រាន់តែដូរ src="music.mp3" រួចដូរពាក្យ video ទៅជា audio ណា៎) -->
+    <video id="bgMusic" src="music.mp4" style="display:none;"></video>
 
     <script>
-        
+        // បញ្ជីលីរិកចម្រៀងពេញមួយបទ គិតជាវិនាទី (Full Song Timeline)
         const lyrics = [
-            { text: "You want me knocking", isInfo: true, duration: 2200 },
-            { text: "On the door", isInfo: true, duration: 1800 },
-            { text: "Crying in the rain...", isInfo: false, duration: 2500 },
-            { text: "Baby girl, for you", isInfo: true, duration: 2300 },
-            { text: "I'll do all them things", isInfo: true, duration: 2500 }
+            // វគ្គទី ១ (Verse 1)
+            { time: 0.5, text: "You want me knocking? 🚪" },
+            { time: 2.5, text: "Why you wanna fight with me? 🥊" },
+            { time: 5.5, text: "I'm in your corner... 🛡️" },
+            { time: 8.0, text: "Why you wanna fight with me? 🥺" },
+            { time: 11.0, text: "Tell me what you're mad about, 😡" },
+            { time: 13.5, text: "We can try and work it out. 🤝" },
+            { time: 16.0, text: "Baby, why you wanna fight with me? 🤍" },
+
+            // វគ្គបន្ទរទី ១ (Chorus 1)
+            { time: 19.5, text: "I don't want no issues, 🛑" },
+            { time: 22.0, text: "I just wanna kiss you... 💋" },
+            { time: 24.5, text: "Why you wanna fight with me? 🥰" },
+            { time: 27.5, text: "You know I adore you, ✨" },
+            { time: 30.0, text: "I would do it all for you! 🌹" },
+            { time: 33.0, text: "So why you wanna fight with me? 🤷‍♂️" },
+
+            // វគ្គទី ២ (Verse 2)
+            { time: 36.5, text: "Look into my eyes now, 👀" },
+            { time: 39.0, text: "Put your weapons down. 🏹" },
+            { time: 41.5, text: "We don't need no drama, 🎭" },
+            { time: 44.0, text: "When you are around. 🌎" },
+            { time: 47.0, text: "You're my number one, 🥇" },
+            { time: 49.5, text: "Underneath the sun. ☀️" },
+            { time: 52.0, text: "So baby, don't be mad at me! 🥺" },
+
+            // វគ្គបន្ទរទី ២ (Chorus 2)
+            { time: 55.5, text: "I don't want no issues, 🛑" },
+            { time: 58.0, text: "I just wanna kiss you... 💋" },
+            { time: 60.5, text: "Why you wanna fight with me? 🥰" },
+            { time: 63.5, text: "You know I adore you, ✨" },
+            { time: 66.0, text: "I would do it all for you! 🌹" },
+            { time: 69.0, text: "So why you wanna fight with me? 🤍" },
+
+            // វគ្គបញ្ចប់ (Outro)
+            { time: 73.0, text: "No more fighting, baby... 🕊️" },
+            { time: 76.5, text: "I love you so much, Aliza. ❤️" },
+            { time: 80.0, text: "Can we smile again? 😊" },
+            { time: 84.0, text: "Forever & Always 👩‍❤️‍👨" }
         ];
 
-        let currentIndex = 0;
-        const errorBox = document.getElementById('errorBox');
-const messageText = document.getElementById('messageText');
-        const errorIcon = document.getElementById('errorIcon');
+        const startBtn = document.getElementById('startBtn');
         const bgMusic = document.getElementById('bgMusic');
-        const startBtn = document.getElementById('start-btn');
 
-        function startSurprise() {
-            startBtn.style.display = 'none'; 
-            bgMusic.play(); 
-            showNextLyrics();
+        startBtn.addEventListener('click', () => {
+            startBtn.style.display = 'none';
+            bgMusic.play().catch(err => {
+                alert("រកមិនឃើញ File ភ្លេងទេ! សូមប្រាកដថាអូនបានដាក់ឈ្មោះ music.mp4 ឬ music.mp3 ត្រឹមត្រូវ។");
+            });
+            startTimeline();
+        });
+
+        function createErrorWindow(text) {
+            const win = document.createElement('div');
+            win.className = 'window';
+            
+            // ធ្វើឱ្យផ្ទាំង Error លោតរាយប៉ាយពេញអេក្រង់ទូរសព្ទ
+            const top = Math.random() * (window.innerHeight - 140);
+            const left = Math.random() * (window.innerWidth - 280);
+            win.style.top = top + 'px';
+            win.style.left = left + 'px';
+
+            win.innerHTML = `
+                <div class="title-bar">
+                    <span>Error_Message.exe</span>
+                    <div class="close-btn">X</div>
+                </div>
+                <div class="window-body">
+                    <div class="error-icon">×</div>
+                    <div><strong>${text}</strong></div>
+                </div>
+            `;
+
+            document.body.appendChild(win);
+            win.style.display = 'block';
+
+            win.querySelector('.close-btn').addEventListener('click', () => {
+                win.remove();
+            });
         }
 
-        function showNextLyrics() {
-            if (currentIndex < lyrics.length) {
-                const current = lyrics[currentIndex];
-                
-          
-                messageText.innerText = current.text;
-                
-          
-                if (current.isInfo) {
-                    errorIcon.className = "icon icon-info";
-                } else {
-                    errorIcon.className = "icon icon-error";
-                }
-
-        
-                errorBox.style.display = 'block';
-
-                
-                const randomX = Math.floor(Math.random() * 40) - 20;
-                const randomY = Math.floor(Math.random() * 60) - 30;
-                errorBox.style.transform = translate(${randomX}px, ${randomY}px);
-
-            
+        function startTimeline() {
+            lyrics.forEach(item => {
                 setTimeout(() => {
-                    errorBox.style.display = 'none';
-                    currentIndex++;
-                    showNextLyrics(); 
-                }, current.duration);
-            } else {
-              
-                alert("I lost the fight, I love you, Aliza!🤍");
-            }
+                    createErrorWindow(item.text);
+                }, item.time * 1000);
+            });
         }
     </script>
 </body>
